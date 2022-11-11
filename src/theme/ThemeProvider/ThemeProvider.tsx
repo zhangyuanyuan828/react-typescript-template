@@ -143,6 +143,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ defaultColorMode, 
     return createTheme(mode === 'light' ? lightThemeOptions : darkThemeOptions)
   }, [colorMode, matches])
 
+  if (process.env.NODE_ENV === 'development') {
+    Object.assign(window, { theme: themeProviderValue })
+  }
+
   return (
     <ColorModeProvider value={colorModeProviderValue}>
       <MuiThemeProvider theme={themeProviderValue}>{children}</MuiThemeProvider>
