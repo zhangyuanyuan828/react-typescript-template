@@ -1,0 +1,13 @@
+{
+  "algorithms": [
+    "br",
+    "gz"
+  ],
+  "filetypes": [
+    ".html",
+    ".js",
+    ".css",
+    ".svg",
+    ".json"
+  ]
+}
