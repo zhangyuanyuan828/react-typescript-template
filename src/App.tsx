@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <section className="w-full">
-        <header className="w-full h-16 bg-white flex flex-row flex-nowrap justify-start items-center gap-4 px-4 shadow-md sticky z-10 top-0">
+        <header className="w-full h-16 bg-white flex flex-row flex-nowrap justify-start items-center gap-4 px-4 shadow-md sticky z-10 top-0 dark:bg-slate-800">
           <NavLink
             to="/"
             end
