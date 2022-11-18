@@ -31,5 +31,5 @@ export const AsyncButton: React.FC<AsyncButtonProps> = ({ loadingIndicator, disa
 }
 
 AsyncButton.defaultProps = {
-  loadingIcon: <CircularProgress color="inherit" size="1em" />
+  loadingIcon: <CircularProgress color="inherit" size="0.75em" />
 }

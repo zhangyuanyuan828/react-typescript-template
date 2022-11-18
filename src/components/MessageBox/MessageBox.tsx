@@ -195,6 +195,7 @@ export const MessageBox: React.FC<MessageBoxProps> = props => {
       if (showInput) {
         const valid = await form.trigger()
         if (!valid) {
+          form.setFocus('value')
           return
         }
         if (typeof onConfirm === 'function') {
@@ -225,7 +226,7 @@ export const MessageBox: React.FC<MessageBoxProps> = props => {
       <DialogTitle component="div" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
         <Box>{type && title === undefined ? t(MessageBoxDefaultTitle[type]) : title}</Box>
         {showCloseButton ? (
-          <IconButton aria-label="关闭" disabled={loading} onClick={handleCloseButtonClick} size="small">
+          <IconButton aria-label={t('dialog.action.close')} disabled={loading} onClick={handleCloseButtonClick} size="small">
             <CloseRounded />
           </IconButton>
         ) : null}
@@ -256,7 +257,7 @@ export const MessageBox: React.FC<MessageBoxProps> = props => {
                   label={inputLabel}
                   placeholder={inputPlaceholder}
                   fullWidth
-                  InputProps={{ readOnly: loading }}
+                  InputProps={{ readOnly: loading, autoComplete: 'off' }}
                   {...fieldProps}
                   inputRef={ref}
                   error={!!fieldState.error}
@@ -281,7 +282,7 @@ export const MessageBox: React.FC<MessageBoxProps> = props => {
               size={size}
               color={confirmButtonColor ?? type}
               disabled={loading}
-              startIcon={loading ? <CircularProgress color="inherit" size="1em" /> : undefined}
+              startIcon={loading ? <CircularProgress color="inherit" size="0.75em" /> : undefined}
               disableElevation
               onClick={handleConfirmButtonClick}>
               {loading ? confirmButtonLoadingText ?? confirmButtonText ?? t('dialog.action.confirm') : confirmButtonText ?? t('dialog.action.confirm')}

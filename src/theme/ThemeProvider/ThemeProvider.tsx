@@ -1,5 +1,5 @@
-import { createTheme, PaletteMode, ThemeOptions, ThemeProvider as MuiThemeProvider, useMediaQuery, useTheme, colors } from '@mui/material'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { buttonBaseClasses, colors, createTheme, PaletteMode, ThemeOptions, ThemeProvider as MuiThemeProvider, useMediaQuery, useTheme } from '@mui/material'
+import { createContext, useContext, useMemo, useState } from 'react'
 
 export type ColorMode = PaletteMode | 'system'
 
@@ -64,12 +64,20 @@ export const lightThemeOptions: ThemeOptions = {
             backgroundColor: 'transparent',
             borderRadius: 999
           }
-        },
-        '.app-region-drag': {
-          WebkitAppRegion: 'drag'
-        },
-        '.app-region-no-drag': {
-          WebkitAppRegion: 'no-drag'
+        }
+      }
+    },
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          ':disabled': {
+            pointerEvents: 'auto',
+            cursor: 'not-allowed'
+          },
+          [`&.${buttonBaseClasses.disabled}`]: {
+            pointerEvents: 'auto',
+            cursor: 'not-allowed'
+          }
         }
       }
     }
@@ -108,12 +116,20 @@ export const darkThemeOptions: ThemeOptions = {
             backgroundColor: 'transparent',
             borderRadius: 999
           }
-        },
-        '.app-region-drag': {
-          WebkitAppRegion: 'drag'
-        },
-        '.app-region-no-drag': {
-          WebkitAppRegion: 'no-drag'
+        }
+      }
+    },
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          ':disabled': {
+            pointerEvents: 'auto',
+            cursor: 'not-allowed'
+          },
+          [`&.${buttonBaseClasses.disabled}`]: {
+            pointerEvents: 'auto',
+            cursor: 'not-allowed'
+          }
         }
       }
     }
@@ -121,12 +137,8 @@ export const darkThemeOptions: ThemeOptions = {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ defaultColorMode, colorModeStorage, children }) => {
-  const [colorMode, setColorMode] = useState<ColorMode>(colorModeStorage?.getColorMode() || 'system')
+  const [colorMode, setColorMode] = useState<ColorMode>(colorModeStorage?.getColorMode() || defaultColorMode || 'system')
   const matches = useMediaQuery('(prefers-color-scheme: dark)')
-
-  useEffect(() => {
-    setColorMode(colorModeStorage?.getColorMode() || defaultColorMode || 'system')
-  }, [defaultColorMode, colorModeStorage])
 
   const colorModeProviderValue = useMemo(() => {
     return {
