@@ -5,6 +5,7 @@ import { I18nextProvider } from 'react-i18next'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { MessageBoxProvider } from './components'
 import { i18n } from './i18n'
+import { StoreProvider } from './store'
 import { ThemeProvider } from './theme'
 
 const Home = lazy(() => import('./views/Home'))
@@ -15,30 +16,32 @@ export function App() {
     <ThemeProvider>
       <CssBaseline>
         <I18nextProvider i18n={i18n}>
-          <MessageBoxProvider>
-            <SnackbarProvider anchorOrigin={{ horizontal: 'center', vertical: 'top' }} maxSnack={5} dense>
-              <BrowserRouter>
-                <Routes>
-                  <Route
-                    index
-                    element={
-                      <Suspense>
-                        <Home />
-                      </Suspense>
-                    }
-                  />
-                  <Route
-                    path="about"
-                    element={
-                      <Suspense>
-                        <About />
-                      </Suspense>
-                    }
-                  />
-                </Routes>
-              </BrowserRouter>
-            </SnackbarProvider>
-          </MessageBoxProvider>
+          <StoreProvider>
+            <MessageBoxProvider>
+              <SnackbarProvider anchorOrigin={{ horizontal: 'center', vertical: 'top' }} maxSnack={5} dense>
+                <BrowserRouter>
+                  <Routes>
+                    <Route
+                      index
+                      element={
+                        <Suspense>
+                          <Home />
+                        </Suspense>
+                      }
+                    />
+                    <Route
+                      path="about"
+                      element={
+                        <Suspense>
+                          <About />
+                        </Suspense>
+                      }
+                    />
+                  </Routes>
+                </BrowserRouter>
+              </SnackbarProvider>
+            </MessageBoxProvider>
+          </StoreProvider>
         </I18nextProvider>
       </CssBaseline>
     </ThemeProvider>

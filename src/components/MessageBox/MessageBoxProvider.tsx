@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from 'react'
-import { generateStringKey } from '../../utils'
+import { nanoid } from 'nanoid'
 import { MessageBox, MessageBoxProps, MessageBoxWithInputProps, MessageBoxWithoutInputProps } from './MessageBox'
 
 export interface MessageBoxWithoutInputOptions extends Partial<Omit<MessageBoxWithoutInputProps, 'open' | 'showInput' | 'onClose' | 'onCancel' | 'onConfirm'>> {
@@ -43,7 +43,7 @@ export const MessageBoxProvider: React.FC<MessageBoxProviderProps> = ({ children
 
   const messageBoxContextValue = useMemo(() => {
     function info(options?: MessageBoxWithoutInputOptions) {
-      const key = generateStringKey()
+      const key = nanoid()
       setMessageBoxs(messageBoxs => [
         ...messageBoxs,
         {
@@ -108,7 +108,7 @@ export const MessageBoxProvider: React.FC<MessageBoxProviderProps> = ({ children
     }
 
     function prompt(options?: MessageBoxWithInputOptions) {
-      const key = generateStringKey()
+      const key = nanoid()
       setMessageBoxs(messageBoxs => [
         ...messageBoxs,
         {

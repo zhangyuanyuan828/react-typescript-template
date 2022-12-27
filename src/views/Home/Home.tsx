@@ -1,18 +1,31 @@
 import { DarkModeRounded, LightModeRounded, SettingsBrightnessRounded } from '@mui/icons-material'
 import { Box, Button, ToggleButton, ToggleButtonGroup, ToggleButtonGroupProps, Typography } from '@mui/material'
+import { observer } from 'mobx-react-lite'
 import { useSnackbar } from 'notistack'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AsyncButton, useMessageBox } from '../../components'
+import { useStores } from '../../store'
 import { useColorMode } from '../../theme'
 import { sleep } from '../../utils'
 
 const types = ['success', 'info', 'warning', 'error'] as const
 
-export function Home() {
+export const Home = observer(function Home() {
   const { colorMode, setColorMode } = useColorMode()
   const { info, confirm, prompt } = useMessageBox()
   const { enqueueSnackbar } = useSnackbar()
   const { t, i18n } = useTranslation()
+  const { timerStore } = useStores()
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      timerStore.increase()
+    }, 1000)
+    return () => {
+      clearInterval(timer)
+    }
+  }, [timerStore])
 
   const handleLanguageChange: ToggleButtonGroupProps['onChange'] = (event, value) => {
     if (value) {
@@ -148,9 +161,11 @@ export function Home() {
           </AsyncButton>
         </Box>
       </Box>
-      <Box height={2000} width="100%"></Box>
+      <Box height={2000} width="100%" textAlign="center">
+        <Typography>{timerStore.seconds}</Typography>
+      </Box>
     </Box>
   )
-}
+})
 
 export default Home
